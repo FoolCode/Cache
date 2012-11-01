@@ -50,7 +50,7 @@ class Cache
 	 * Create a new named instance
 	 *
 	 * @param \Foolz\Cache\Config  $config         The configuration that
-	 * @param string                      $instance_name  The name of the instance
+	 * @param string               $instance_name  The name of the instance
 	 */
 	public static function instantiate(\Foolz\Cache\Config $config, $instance_name = 'default')
 	{
