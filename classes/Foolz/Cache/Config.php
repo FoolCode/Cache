@@ -19,18 +19,18 @@ class Config
 	protected $throw = false;
 
 	/**
-	 * Returns
+	 * Returns an instance for the storage selected
 	 *
-	 * @param  string  $storage
+	 * @param  string  $storage  The name of the storage
 	 *
 	 * @return  \Foolz\Cache\Config
 	 */
 	public static function forge($storage)
 	{
-		$class = '\Foolz\Cache\Config\\'.$storage;
+		$class = '\Foolz\Cache\Config\\'.Util::lowercaseToClassName($storage);
 
 		// check that we have such a storage engine
-		if ( ! class_exists('\Foolz\Cache\Storage\\'.ucfirst($storage)))
+		if ( ! class_exists($class))
 		{
 			throw new \DomainException('The storage engine selected doesn\'t exist.');
 		}
@@ -102,6 +102,45 @@ class Config
 		}
 
 		return $this->storage;
+	}
+
+	/**
+	 * Sets the format to use
+	 *
+	 * @param  string  $format  The name of the format
+	 *
+	 * @throws  \DomainException  In case the format doesn't exist
+	 */
+	public function setFormat($format)
+	{
+		$class = '\Foolz\Cache\Format\\'.static::lowercaseToClassName($storage);
+
+		// check that we have such a storage engine
+		if ( ! class_exists($class))
+		{
+			throw new \DomainException('The format selected doesn\'t exist.');
+		}
+
+		$this->format = new $class();
+
+		return $this;
+	}
+
+	/**
+	 * Returns the format
+	 *
+	 * @return  \Foolz\Cache\Format  The format object
+	 *
+	 * @throws  \BadMethodCallException  If the format wasn't selected
+	 */
+	public function getFormat()
+	{
+		if ($this->format === null)
+		{
+			throw new \BadMethodCallException('The format wasn\'t selected.');
+		}
+
+		return $this->format;
 	}
 
 	/**

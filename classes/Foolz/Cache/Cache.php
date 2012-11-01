@@ -118,7 +118,7 @@ class Cache
 	{
 		if ($this->engine === null)
 		{
-			$class = '\Foolz\Cache\Storage\\'.$this->getConfig()->getStorage();
+			$class = '\Foolz\Cache\Storage\\'.Util::lowercaseToClassName($this->getConfig()->getStorage());
 
 			$this->engine = new $class();
 			$this->engine->setConfig($this->getConfig());
@@ -159,7 +159,7 @@ class Cache
 	 */
 	public function set($value, $expiration)
 	{
-		$this->getEngine()->set($this->getKey(), $value, $expiration);
+		$this->getEngine()->set($this->getKey(), $this->getConfig()->getFormat()->encode($value), $expiration);
 	}
 
 	/**
@@ -177,7 +177,7 @@ class Cache
 			throw new \OutOfBoundsException('The value wasn\'t found for the specified key.');
 		}
 
-		return $result;
+		return $this->getConfig()->getFormat()->decode($result);
 	}
 
 	/**
