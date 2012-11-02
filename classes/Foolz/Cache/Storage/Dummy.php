@@ -4,12 +4,22 @@ namespace Foolz\Cache\Storage;
 
 class Dummy extends \Foolz\Cache\Storage
 {
-	public function get($key)
+	/**
+	 * Returns the configuration of the storage engine
+	 *
+	 * @return  \Foolz\Cache\Config\Dummy
+	 */
+	public function getConfig()
 	{
-		return new \Foolz\Cache\Void;
+		return $this->config;
 	}
 
-	public function set($key, $value, $expiration)
+	public function get($key)
+	{
+		return \Foolz\Cache\Void::forge();
+	}
+
+	public  function set($key, $value, $expiration)
 	{
 
 	}

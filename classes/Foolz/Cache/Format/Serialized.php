@@ -2,7 +2,7 @@
 
 namespace Foolz\Cache\Format;
 
-class Serialized extends Format
+class Serialized extends \Foolz\Cache\Format
 {
 	public function encode($content)
 	{

@@ -40,17 +40,24 @@ class Cache
 	protected $config = null;
 
 	/**
+	 * The engine to use
+	 *
+	 * @var  \Foolz\Cache\Storage
+	 */
+	protected $engine = null;
+
+	/**
 	 * An array with the configuration instances
 	 *
 	 * @var  \Foolz\Cache\Config[]
 	 */
-	protected $instances = [];
+	protected static $instances = [];
 
 	/**
 	 * Create a new named instance
 	 *
-	 * @param \Foolz\Cache\Config  $config         The configuration that
-	 * @param string               $instance_name  The name of the instance
+	 * @param  \Foolz\Cache\Config  $config         The configuration that
+	 * @param  string               $instance_name  The name of the instance
 	 */
 	public static function instantiate(\Foolz\Cache\Config $config, $instance_name = 'default')
 	{
@@ -68,10 +75,34 @@ class Cache
 	}
 
 	/**
-	 * Creates a new instance of the
+	 * Returns a Cache object without a key set
+	 *
+	 * @param  string  $instance_name  The named insttance
+	 *
+	 * @return  \Foolz\Cache\Cache    The new Cache object
+	 * @throws  \OutOfRangeException  If the instance doesn't exist
+	 */
+	public static function forge($instance_name = 'default')
+	{
+		if ( ! isset(static::$instances[$instance_name]))
+		{
+			throw new \OutOfRangeException('The instance specified doesn\'t exist');
+		}
+
+		$new = new static();
+		$new->setConfig(static::$instances[$instance_name]);
+
+		return $new;
+	}
+
+	/**
+	 * Creates a Cache object with a key set
 	 *
 	 * @param  string  $key            The key for the stored value
 	 * @param  string  $instance_name  The named instance to use
+	 *
+	 * @return  \Foolz\Cache\Cache    The new cache object
+	 * @throws  \OutOfRangeException  If the instance doesn't exist
 	 */
 	public static function item($key, $instance_name = 'default')
 	{
@@ -83,6 +114,8 @@ class Cache
 		$new = new static();
 		$new->setConfig(static::$instances[$instance_name]);
 		$new->setKey($key);
+
+		return $new;
 	}
 
 	/**
@@ -148,7 +181,7 @@ class Cache
 	 */
 	public function getKey()
 	{
-		return $this->key;
+		return $this->getConfig()->getPrefix().$this->key;
 	}
 
 	/**
@@ -157,7 +190,7 @@ class Cache
 	 * @param  $value       The value to store
 	 * @param  $expiration  The time in seconds
 	 */
-	public function set($value, $expiration)
+	public function set($value, $expiration = 0)
 	{
 		$this->getEngine()->set($this->getKey(), $this->getConfig()->getFormat()->encode($value), $expiration);
 	}
@@ -199,7 +232,7 @@ class Cache
 	 */
 	public function flush()
 	{
-		$this->getEngine()->flush($this->getKey());
+		$this->getEngine()->flush();
 
 		return $this;
 	}

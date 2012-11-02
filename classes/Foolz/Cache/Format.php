@@ -11,7 +11,7 @@ abstract class Format
 	 *
 	 * @return  string  The encoded content in a string
 	 */
-	public function encode($content);
+	public abstract function encode($content);
 
 	/**
 	 * Converts the string from the format
@@ -20,5 +20,5 @@ abstract class Format
 	 *
 	 * @return  mixed  The original content
 	 */
-	public function decode($string);
+	public abstract function decode($string);
 }

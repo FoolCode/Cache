@@ -2,7 +2,7 @@
 
 namespace Foolz\Cache\Format;
 
-class ArrayJson extends Format
+class ArrayJson extends \Foolz\Cache\Format
 {
 	public function encode($content)
 	{

@@ -19,11 +19,18 @@ class Config
 	protected $throw = false;
 
 	/**
+	 * A prefix for the keys so they don't get mixed with variables from other storages
+	 *
+	 */
+	protected $prefix = '';
+
+	/**
 	 * Returns an instance for the storage selected
 	 *
 	 * @param  string  $storage  The name of the storage
 	 *
-	 * @return  \Foolz\Cache\Config
+	 * @return  \Foolz\Cache\Config  The Config class specific to the storage
+	 * @throws  \DomainException     If the storage engine selected doesn't exist
 	 */
 	public static function forge($storage)
 	{
@@ -89,6 +96,16 @@ class Config
 	}
 
 	/**
+	 * Shorthand that allows using IDE suggestions
+	 *
+	 * @return  \Foolz\Cache\Config\File
+	 */
+	public static function forgeVolatile()
+	{
+		return static::forge('volatile');
+	}
+
+	/**
 	 * Get the selected storage engine
 	 *
 	 * @return  string                   The name of the storage engine
@@ -113,7 +130,7 @@ class Config
 	 */
 	public function setFormat($format)
 	{
-		$class = '\Foolz\Cache\Format\\'.static::lowercaseToClassName($storage);
+		$class = '\Foolz\Cache\Format\\'.Util::lowercaseToClassName($format);
 
 		// check that we have such a storage engine
 		if ( ! class_exists($class))
@@ -141,6 +158,30 @@ class Config
 		}
 
 		return $this->format;
+	}
+
+	/**
+	 * Set a prefix for the keys
+	 *
+	 * @param  string  $prefix
+	 *
+	 * @return  \Foolz\Cache\Config  The current object
+	 */
+	public function setPrefix($prefix)
+	{
+		$this->prefix = $prefix;
+
+		return $this;
+	}
+
+	/**
+	 * Returns the set prefix
+	 *
+	 * @return  string  The prefix
+	 */
+	public function getPrefix()
+	{
+		return $this->prefix;
 	}
 
 	/**

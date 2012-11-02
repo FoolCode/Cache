@@ -15,7 +15,7 @@ class Apc extends \Foolz\Cache\Storage
 		}
 		else
 		{
-			return new \Foolz\Cache\Void;
+			return \Foolz\Cache\Void::forge();
 		}
 	}
 

@@ -26,30 +26,36 @@ abstract class Storage
 	 *
 	 * @return  \Foolz\Cache\Config
 	 */
-	public function getConfig();
+	public abstract function getConfig();
 
 	/**
 	 * Returns the value or Void if not available
 	 *
+	 * @param  string  $key  The cache key
+	 *
 	 * @return  mixed  The value stored or \Foolz\Cache\Void
 	 */
-	public function get();
+	public abstract function get($key);
 
 	/**
 	 * Sets the value for the key being worked on
 	 *
-	 * @param  $value  The value to set
+	 * @param  string  $key         The cache key
+	 * @param  mixed   $value       The value to set
+	 * @param  int     $expiration  Duration of the cache in seconds
 	 */
-	public function set($value);
+	public abstract function set($key, $value, $expiration);
 
 	/**
 	 * Deletes the value stored in the key
+	 *
+	 * @param  string  $key  The cache key
 	 */
-	public function delete();
+	public abstract function delete($key);
 
 	/**
 	 * Flushes the entire cache (comprehending the one from other applications in some cases)
 	 */
-	public function flush();
+	public abstract function flush();
 
 }

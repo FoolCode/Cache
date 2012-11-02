@@ -24,7 +24,7 @@ class Db extends \Foolz\Cache\Storage
 		}
 		else
 		{
-			return new \Foolz\Cache\Void;
+			return \Foolz\Cache\Void::forge();
 		}
 
 		$expiration = 0;
@@ -35,7 +35,7 @@ class Db extends \Foolz\Cache\Storage
 
 		if ($expiration && time() < $expiration + filemtime($path.'.expiration'))
 		{
-			return new \Foolz\Cache\Void;
+			return \Foolz\Cache\Void::forge();
 		}
 
 		return $result;

@@ -2,7 +2,7 @@
 
 namespace Foolz\Cache\Format;
 
-class Plain extends Format
+class Plain extends \Foolz\Cache\Format
 {
 	public function encode($content)
 	{
