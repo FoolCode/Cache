@@ -4,6 +4,16 @@ namespace Foolz\Cache\Storage;
 
 class Apc extends \Foolz\Cache\Storage
 {
+	/**
+	 * Returns the configuration of the storage engine
+	 *
+	 * @return  \Foolz\Cache\Config\Apc
+	 */
+	public function getConfig()
+	{
+		return $this->config;
+	}
+
 	public function get($key)
 	{
 		$success = false;

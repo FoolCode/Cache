@@ -12,17 +12,24 @@ class Config
 	protected $storage = null;
 
 	/**
-	 * If true, rather than returning Void, an exception will be thrown
+	 * The format object relative to the format selected
 	 *
-	 * @var  boolean
+	 * @var  \Foolz\Cache\Format
 	 */
-	protected $throw = false;
+	protected $format = null;
 
 	/**
 	 * A prefix for the keys so they don't get mixed with variables from other storages
 	 *
 	 */
 	protected $prefix = '';
+
+	/**
+	 * If true, rather than returning Void, an exception will be thrown
+	 *
+	 * @var  boolean
+	 */
+	protected $throw = false;
 
 	/**
 	 * Returns an instance for the storage selected

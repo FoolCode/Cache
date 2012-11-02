@@ -2,7 +2,7 @@
 
 namespace Foolz\Cache\Config;
 
-class Memcached
+class Memcached extends \Foolz\Cache\Config
 {
 	/**
 	 * The name of the storage engine

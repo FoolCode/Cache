@@ -2,7 +2,7 @@
 
 namespace Foolz\Cache\Storage;
 
-class Db extends \Foolz\Cache\Storage
+class File extends \Foolz\Cache\Storage
 {
 	/**
 	 * Returns the configuration of the storage engine

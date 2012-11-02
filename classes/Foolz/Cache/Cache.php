@@ -210,6 +210,11 @@ class Cache
 			throw new \OutOfBoundsException('The value wasn\'t found for the specified key.');
 		}
 
+		if ($result instanceof \Foolz\Cache\Void)
+		{
+			return $result;
+		}
+
 		return $this->getConfig()->getFormat()->decode($result);
 	}
 

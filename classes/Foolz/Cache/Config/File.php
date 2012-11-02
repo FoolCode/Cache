@@ -24,7 +24,7 @@ class File extends \Foolz\Cache\Config
 	public function __construct()
 	{
 		// sadly we must set $this->dir here regardless of storage engine, as we want to use __DIR__
-		$this->dir = __DIR__.'/../../../resources/cache/';
+		$this->dir = __DIR__.'/../../../../resources/cache/';
 	}
 
 	/**

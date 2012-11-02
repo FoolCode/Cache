@@ -85,4 +85,47 @@ class Db extends \Foolz\Cache\Config
 		return $this->table;
 	}
 
+	/**
+	 * Creates the table necessary to store the cache
+	 * Notice that MySQL must be >5.5 and it will use utf8mb4/utf8mb4_unicode_ci for extra compatibility with 4byte characters
+	 * It is suggested to copy this code in your application to customize it further.
+	 *
+	 * @return  \Foolz\Cache\Config\Db   The current
+	 * @throws  \BadMethodCallException
+	 */
+	public function createTable()
+	{
+		if ($this->getTable() === null)
+		{
+			throw new \BadMethodCallException('The name of the table wasn\'t set.');
+		}
+
+		$sm = $this->getConnection()->getSchemaManager();
+
+		$schema = $sm->createSchema();
+		$table = $schema->createTable($this->getTable());
+
+		if ($this->getConnection()->getDriver()->getName() == 'pdo_mysql')
+		{
+			$table->addOption('charset', 'utf8mb4');
+			$table->addOption('collate', 'utf8mb4_unicode_ci');
+		}
+
+		$table->addColumn('id', 'integer', ['unsigned' => true, 'autoincrement' => true, 'notnull' => false]);
+		$table->addColumn('key', 'string', ['length' => 128]);
+		$table->addColumn('value', 'text');
+		$table->addColumn('created', 'integer', ['unsigned' => true]);
+		$table->addColumn('expiration', 'integer', ['unsigned' => true]);
+		$table->setPrimaryKey(['key']);
+		$table->addUniqueIndex(['key'], 'key_index');
+
+		$sql_arr = $schema->getMigrateFromSql($sm->createSchema(), $sm->getDatabasePlatform());
+
+		foreach ($sql_arr as $sql)
+		{
+			$this->getConnection()->query($sql);
+		}
+
+		return $this;
+	}
 }
