@@ -21,6 +21,7 @@ class Config
 	/**
 	 * A prefix for the keys so they don't get mixed with variables from other storages
 	 *
+	 * @var string
 	 */
 	protected $prefix = '';
 

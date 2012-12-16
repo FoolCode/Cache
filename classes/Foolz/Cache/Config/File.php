@@ -33,7 +33,7 @@ class File extends \Foolz\Cache\Config
 	 * @param type $dir
 	 *
 	 * @return  \Foolz\Cache\Config  The current object
-	 * @throws  \DomainException            If the storage engine doesn't exist or if the directory doesn't exist;
+	 * @throws  \DomainException     If the storage engine doesn't exist or if the directory doesn't exist;
 	 */
 	public function setDir($dir)
 	{
