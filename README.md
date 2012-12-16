@@ -10,7 +10,7 @@ You must give a configuration object to an instance of cache.
 <?php
 Cache::instantiate(Config::forgeApc());
 Cache::item('test')->set($value);
-Cache::item('test')->get($fallback);
+Cache::item('test')->get();
 ?>
 ```
 
@@ -22,21 +22,10 @@ Currently bundled storages:
 
 * APC
 * Memcached
-* DB (Doctrine DBAL)
-
-	Permanent storage, great for configurations
-
-* Dummy
-
-	Always returns not found
-
+* DB (Doctrine DBAL) (permanent storage, great for configurations)
+* Dummy (always returns not found)
 * File
-
-	Writes down files in a folder
-
-* Volatile
-
-	Uses PHP Arrays and gets wiped on the end of the process
+* Volatile (uses PHP Arrays and gets wiped on the end of the process)
 
 ## Formats
 
