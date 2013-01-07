@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__.'/Storage.php';
+
 use \Foolz\Cache\Cache,
 	\Foolz\Cache\Config;
 

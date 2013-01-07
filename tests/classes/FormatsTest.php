@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__.'/Storage.php';
+
 class FormatsTest extends PHPUnit_Framework_TestCase
 {
 	public function testArrayJson()
