@@ -87,7 +87,7 @@ class Db extends \Foolz\Cache\Config
 
 	/**
 	 * Creates the table necessary to store the cache
-	 * Notice that MySQL must be >5.5 and it will use utf8mb4/utf8mb4_unicode_ci for extra compatibility with 4byte characters
+	 * Notice that MySQL must be >5.5 and it will use utf8mb4/utf8mb4_general_ci for extra compatibility with 4byte characters
 	 * It is suggested to copy this code in your application to customize it further.
 	 *
 	 * @return  \Foolz\Cache\Config\Db   The current
@@ -108,7 +108,6 @@ class Db extends \Foolz\Cache\Config
 		if ($this->getConnection()->getDriver()->getName() == 'pdo_mysql')
 		{
 			$table->addOption('charset', 'utf8mb4');
-			$table->addOption('collate', 'utf8mb4_unicode_ci');
 		}
 
 		$table->addColumn('id', 'integer', ['unsigned' => true, 'autoincrement' => true, 'notnull' => false]);
