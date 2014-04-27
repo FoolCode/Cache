@@ -73,6 +73,16 @@ class Config
 		return static::forge('memcached');
 	}
 
+    /**
+     * Shorthand that allows using IDE suggestions
+     *
+     * @return  \Foolz\Cache\Config\Redis
+     */
+    public static function forgeRedis()
+    {
+        return static::forge('redis');
+    }
+
 	/**
 	 * Shorthand that allows using IDE suggestions
 	 *

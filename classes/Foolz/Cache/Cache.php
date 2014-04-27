@@ -187,8 +187,8 @@ class Cache
 	/**
 	 * Sets the value for the key
 	 *
-	 * @param  $value       The value to store
-	 * @param  $expiration  The time in seconds
+	 * @param  string  $value       The value to store
+	 * @param  int  $expiration  The time in seconds
 	 */
 	public function set($value, $expiration = 0)
 	{
