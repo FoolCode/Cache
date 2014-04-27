@@ -36,7 +36,7 @@ class Redis extends \Foolz\Cache\Storage
 
     public function delete($key)
     {
-        $this->getConfig()->getConnection()->delete($key);
+        $this->getConfig()->getConnection()->del($key);
     }
 
     public function flush()
