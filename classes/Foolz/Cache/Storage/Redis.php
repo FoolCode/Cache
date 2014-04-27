@@ -28,9 +28,9 @@ class Redis extends \Foolz\Cache\Storage
 
     public function set($key, $value, $expiration)
     {
-        $this->getConfig()->getConnection()->pipeline(function() use ($key, $value, $expiration) {
-            $this->getConfig()->getConnection()->set($key, $value);
-            $this->getConfig()->getConnection()->expire($key, $expiration);
+        $this->getConfig()->getConnection()->transaction(function($tx) use ($key, $value, $expiration) {
+            $tx->set($key, $value);
+            $tx->expire($key, $expiration);
         });
     }
 
