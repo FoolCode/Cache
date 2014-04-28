@@ -28,8 +28,7 @@ class Redis extends \Foolz\Cache\Storage
 
     public function set($key, $value, $expiration)
     {
-        $this->getConfig()->getConnection()->set($key, $value);
-        $this->getConfig()->getConnection()->expire($key, $expiration);
+        $this->getConfig()->getConnection()->setex($key, $expiration, $value);
     }
 
     public function delete($key)
