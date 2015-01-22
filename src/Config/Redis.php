@@ -43,14 +43,12 @@ class Redis extends \Foolz\Cache\Config
      */
     public function getConnection()
     {
-        if ($this->connection === null)
-        {
+        if ($this->connection === null) {
             $this->connection = new Client($this->servers);
 
             try {
                 $this->connection->connect();
-            }
-            catch (CommunicationException $exception) {
+            } catch (CommunicationException $exception) {
                 throw new \RuntimeException('The Redis server could not be reached.');
             }
         }

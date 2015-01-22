@@ -2,12 +2,12 @@
 
 namespace Foolz\Cache\Storage;
 
-class Redis extends \Foolz\Cache\Storage
+class Memcached extends \Foolz\Cache\Storage
 {
     /**
      * Returns the configuration of the storage engine
      *
-     * @return  \Foolz\Cache\Config\Redis
+     * @return  \Foolz\Cache\Config\Memcached
      */
     public function getConfig()
     {
@@ -18,8 +18,7 @@ class Redis extends \Foolz\Cache\Storage
     {
         $result = $this->getConfig()->getConnection()->get($key);
 
-        if ($result === null)
-        {
+        if ($result === false && $this->getConfig()->getConnection()->getResultCode() === \Memcached::RES_NOTFOUND) {
             return \Foolz\Cache\Void::forge();
         }
 
@@ -28,16 +27,16 @@ class Redis extends \Foolz\Cache\Storage
 
     public function set($key, $value, $expiration)
     {
-        $this->getConfig()->getConnection()->setex($key, $expiration, $value);
+        $this->getConfig()->getConnection()->set($key, $value, $expiration);
     }
 
     public function delete($key)
     {
-        $this->getConfig()->getConnection()->del($key);
+        $this->getConfig()->getConnection()->delete($key);
     }
 
     public function flush()
     {
-        $this->getConfig()->getConnection()->flushdb();
+        $this->getConfig()->getConnection()->flush();
     }
 }
